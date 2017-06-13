@@ -1,4 +1,4 @@
-Registers_Users
+Registered_Users
 --------------
 PK_UserId
 FirstName
@@ -17,8 +17,7 @@ DepartmentDescription
 Gender
 --------------
 PK_GenderID
-Male
-Female
+GenderValue
 
 Physical_Address
 --------------
