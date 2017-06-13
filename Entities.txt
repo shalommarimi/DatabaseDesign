@@ -38,9 +38,19 @@ CountryName
 
 Province
 --------------
-PK_ProviceId
+PK_ProvinceId
 ProviceName
 
+
+Surbub
+----------
+PK_SuburbId
+Suburb
+
+Town
+----------
+PK_TownId
+Town
 
 City
 --------------
