@@ -6,7 +6,8 @@ MiddleName
 LastName
 EmailAddress
 Password
-
+IsApproved
+Status
 
 Department
 --------------
@@ -17,23 +18,22 @@ DepartmentDescription
 Gender
 --------------
 PK_GenderID
-GenderValue
+GenderType
 
 Physical_Address
 --------------
 PK_PhycalAddressId
 PhysicalAddress
+streetLine1
+StreetLine2
+streetline3
 
 Postal_Address
 --------------
 PK_PostalAddressId
 PostalAddress
-
-Country
---------------
-PK_CountryId
-CountryName
-
+AddressLine1
+AddressLine2
 
 Province
 --------------
@@ -41,31 +41,19 @@ PK_ProvinceId
 ProviceName
 
 
-Surbub
-----------
-PK_SuburbId
-Suburb
-
-Town
-----------
-PK_TownId
-Town
-
 City
 --------------
 PK_CityId
 CityName
 
-Street
---------------
-PK_StreetId
-StreetName
-UnitNumber
 
 PostalCode
 --------------
 PK_PostalCodeId
 PostalCodeNumber
+
+RegisteredUsers_Log
+===============
 
 
 
