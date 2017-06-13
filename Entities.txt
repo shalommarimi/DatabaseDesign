@@ -49,7 +49,7 @@ CityName
 
 Street
 --------------
-StreetId
+PK_StreetId
 StreetName
 UnitNumber
 
