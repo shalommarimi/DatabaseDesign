@@ -1,0 +1,91 @@
+
+---CREATING A TABLES OF PHYSICAL ADDRESS-----
+CREATE TABLE Physical_Address
+(
+ PK_PhysicalAddressId int PRIMARY KEY NOT NULL,
+ PhysicalAddress VARCHAR(100),
+ StreetLine1 VARCHAR(40),
+ streetLine2 VARCHAR(40),
+ StreetLine3 VARCHAR(40),
+ 
+
+
+);
+---CREATING POSTAL ADDRESS---
+CREATE TABLE Postal_Address
+(
+PK_PostalAddressId int PRIMARY KEY,
+PostalAddress VARCHAR(50),
+AddressLine1 VARCHAR(50),
+AddressLine2 VARCHAR(50),
+AddressLine3 VARCHAR(50),
+
+);
+--PROVINCE
+
+CREATE TABLE Province
+(
+PK_ProvinceId int PRIMARY KEY NOT NULL,
+ProvinceName VARCHAR(40),
+
+)
+
+----POSTALCODE
+CREATE TABLE	PostalCode
+(
+PK_PostalCodeId int PRIMARY KEY NOT NULL,
+PostalCodeNumber varchar (5),
+
+);
+---CITY
+CREATE TABLE City
+(
+PK_CityId int PRIMARY KEY NOT NULL,
+CityName varchar (20),
+
+);
+
+--SURBURB
+CREATE TABLE Surburb
+
+(
+PK_SurburbId int PRIMARY KEY NOT NULL,
+SurburbName varchar (20),
+FK_PhysicalAddressId int FOREIGN KEY REFERENCES  Physical_Address
+(PK_PhysicalAddressId),
+FK_PostalAddressId int FOREIGN KEY REFERENCES Postal_Address(PK_PostalAddressId)
+);
+
+
+
+---ALTERATION
+--FOR 
+--ADDRESS
+
+ALTER TABLE Physical_Address
+ADD
+
+FK_ProvinceId int FOREIGN KEY REFERENCES Province(PK_ProvinceId),
+FK_CityId int FOREIGN KEY REFERENCES City(PK_CityId),
+FK_PostalCodeId int FOREIGN KEY REFERENCES PostalCode(PK_PostalCodeId),
+FK_UserId int FOREIGN KEY REFERENCES Registered_Users(PK_UserId)
+
+
+-----POSTAL
+ALTER TABLE Postal_Address
+ADD
+FK_SurburbId int FOREIGN KEY REFERENCES Surburb(PK_SurburbId),
+ FK_Cityid int FOREIGN KEY REFERENCES City(PK_CityId),
+ FK_ProvinceId int FOREIGN KEY REFERENCES Province(PK_ProvinceId),
+ FK_PostalCodeId int FOREIGN KEY REFERENCES PostalCode(PK_PostalCodeId),
+ FK_UserId int FOREIGN KEY REFERENCES Registered_Users(PK_UserId)
+
+ ---POSTALCODE
+ ALTER TABLE PostalCode
+ ADD
+ FK_SurburbId int FOREIGN KEY REFERENCES Surburb(PK_SurburbId)
+ --CITY
+ ALTER TABLE Surburb
+ ADD
+ FK_SurburbId int FOREIGN KEY REFERENCES Surburb(PK_SurburbId),
+FK_ProvinceId int FOREIGN KEY REFERENCES Province(PK_ProvinceId)
