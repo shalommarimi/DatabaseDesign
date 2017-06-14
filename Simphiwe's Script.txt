@@ -8,6 +8,16 @@ SurburbId int FOREIGN KEY REFERENCES Surburb(SurburbId),
 ProvinceId int FOREIGN KEY REFERENCES Province(ProvinceId)
 );
 
+Surburb
+---------------
+(
+SurburbId int NOT NULL,
+SurburbName varchar (20),
+PRIMARY KEY (SurburbId),
+PhysicalAddressId int FOREIGN KEY REFERENCES PhysicalAddress(PhysicalAddressId)
+PostalAddressId int FOREIGN KEY REFERENCES PostalAddress(PostalAddressId)
+)
+
 PostalCode
 --------------
 (
