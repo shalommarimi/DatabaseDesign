@@ -4,7 +4,9 @@ FirstName VARCHAR(100) NOT NULL,
 MiddleName VARCHAR(100) NULL,
 LastName VARCHAR(100) NULL,
 EmailAddress NVARCHAR(50) NOT NULL,
-Password NVARCHAR(50) NOT NULL
+Password NVARCHAR(50) NOT NULL,
+IsApproved BIT NOT NULL CONSTRAINT default_IsApproved DEFAULT 0,
+IsDeleted BIT NOT NULL CONSTRAINT defauult_IsDeleted DEFAULT 0
 
 );
 
@@ -15,8 +17,24 @@ DepartmentName VARCHAR(500) NOT NULL,
 DepartmentDescription VARCHAR(500) NOT NULL
 );
 
+INSERT INTO Department VALUES ('GMIC','Gauteng Microsoft Department');
+INSERT INTO Department VALUES ('GMOB','Gauteng Mobile Department');
+INSERT INTO Department VALUES ('GQUA','Gauteng Quality Assurance Department');
+
+
 
 CREATE TABLE Gender
 (PK_GenderId INTEGER IDENTITY PRIMARY KEY,
 GenderValue VARCHAR(6)
 );
+
+INSERT INTO Gender VALUES ('Male');
+INSERT INTO Gender VALUES ('Female');
+
+
+
+ALTER TABLE Registered_Users
+ADD
+FK_DepartmentId INTEGER NOT NULL FOREIGN KEY REFERENCES Department(PK_DepartmentId),
+FK_GenderId INTEGER NOT NULL FOREIGN KEY REFERENCES Gender(PK_GenderId);
+;
