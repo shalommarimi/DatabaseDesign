@@ -1,0 +1,23 @@
+City
+--------------
+(
+PK_CityId int NOT NULL,
+CityName varchar (20),
+FK_Surburb,
+FK_Province
+);
+
+PostalCode
+--------------
+(
+PK_PostalCodeId int NOT NULL,
+PostalCodeNumber varchar (5),
+FK_Surburb
+);
+
+RegisteredUsers_Log
+===============
+(
+PK_Log int NOT NULL,
+LogStatus
+);
