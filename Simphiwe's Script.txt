@@ -1,26 +1,29 @@
 City
 --------------
 (
-PK_CityId int NOT NULL,
+CityId int NOT NULL,
 CityName varchar (20),
-FK_Surburb,
-FK_Province
+PRIMARY KEY (CityId),
+SurburbId int FOREIGN KEY REFERENCES Surburb(SurburbId),
+ProvinceId int FOREIGN KEY REFERENCES Province(ProvinceId)
 );
 
 PostalCode
 --------------
 (
-PK_PostalCodeId int NOT NULL,
+PostalCodeId int NOT NULL,
 PostalCodeNumber varchar (5),
-FK_Surburb
+PRIMARY KEY (PostalCodeId),
+SurburbId int FOREIGN KEY REFERENCES Surburb(SurburbId)
 );
 
 RegisteredUsers_Log
 ===============
 (
-PK_EntryId int NOT NULL,
-MessageLog varchar 10
-DateLog DateTime
-FK_UserId
+EntryId int NOT NULL,
+MessageLog varchar (10),
+DateLog DateTime,
+PRIMARY KEY Entry(EntryId),
+UserId int FOREIGN KEY REFERENCES User(UserId)
 
 );
