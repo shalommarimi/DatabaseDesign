@@ -1,0 +1,296 @@
+[dbo].[Sp_DeleteUser]
+[dbo].[Sp_InsertUser]
+[dbo].[Sp_SelectUser]
+[dbo].[Sp_SoftDeleteUser]
+[dbo].[Sp_UpdateUser]
+[dbo].[Sp_UpdateUserPassword]
+[dbo].[Sp_UpdateUserStatus]
+
+
+
+
+
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_DeleteUser]    Script Date: 2017/06/19 13:58:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[Sp_DeleteUser]
+
+@PK_UserId INT
+
+AS
+DELETE FROM [dbo].[Registered_Users]
+
+      WHERE PK_UserId = @PK_UserId
+
+	  SELECT @@ROWCOUNT
+
+
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_InsertUser]    Script Date: 2017/06/19 13:58:38 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER PROC [dbo].[Sp_InsertUser]
+       @FirstName varchar(100)
+      ,@MiddleName varchar(100)
+	  ,@LastName varchar(100)
+      ,@EmailAddress  nvarchar(50)
+      ,@Password   nvarchar (50)
+      ,@IsApproved bit
+	  ,@IsDeleted bit
+	  ,@FK_GenderId int
+      ,@FK_DepartmentId int
+AS
+
+INSERT INTO [dbo].[Registered_Users]
+           ([FirstName]
+           ,[MiddleName]
+           ,[LastName]
+           ,[EmailAddress]
+           ,[Password]
+           ,[IsApproved]
+           ,[IsDeleted]
+		   ,[FK_GenderId]
+           ,[FK_DepartmentId]
+           )
+     VALUES
+           (@FirstName
+           ,@MiddleName
+           ,@LastName
+           ,@EmailAddress
+           ,@Password
+           ,@IsApproved
+           ,@IsDeleted
+		   ,@FK_GenderId
+           ,@FK_DepartmentId)
+
+
+           BEGIN
+		     DECLARE @status VARCHAR(50);
+			 DECLARE @PK_UserId INT;
+                              SELECT @FirstName= FirstName,@PK_UserId=PK_UserId
+                              FROM [dbo].[Registered_Users]
+                              WHERE PK_UserId=PK_UserId
+                              SET @status='User '+@FirstName+' was created '
+
+                         
+                       INSERT INTO  [dbo].[RegisteredUsers_Log] (MessageLog,LogDate,FK_UserId)
+                       VALUES (@status,GETDATE(),@PK_UserId)
+                             
+
+		END
+
+
+
+
+
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_SelectUser]    Script Date: 2017/06/19 13:58:49 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROC [dbo].[Sp_SelectUser]
+
+AS
+
+SELECT 
+       [FirstName]
+      ,[MiddleName]
+      ,[LastName]
+      ,[EmailAddress]
+      ,HASHBYTES('SHA1',[Password])AS Password
+      ,[IsApproved]
+      ,[IsDeleted]
+      ,[FK_DepartmentId]
+      ,[FK_GenderId]
+  FROM [dbo].[Registered_Users]
+
+
+
+
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_SoftDeleteUser]    Script Date: 2017/06/19 13:59:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROC [dbo].[Sp_SoftDeleteUser]
+       @PK_UserId INT
+      ,@IsDeleted INT
+	 
+AS
+ 
+UPDATE [dbo].[Registered_Users]
+   SET 
+	  [IsDeleted] = @IsDeleted
+    
+ WHERE PK_UserId = @PK_UserId
+ SELECT @@ROWCOUNT
+
+
+
+
+
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_UpdateUser]    Script Date: 2017/06/19 13:59:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROC [dbo].[Sp_UpdateUser]
+       @PK_UserId int
+      ,@FirstName varchar(100)
+      ,@MiddleName varchar(100)
+	  ,@LastName varchar(100)
+      ,@EmailAddress  nvarchar(50)
+      ,@Password   nvarchar (50)
+      ,@IsApproved bit
+	  ,@IsDeleted bit
+	  ,@FK_GenderId int
+      ,@FK_DepartmentId int
+AS
+ 
+UPDATE [dbo].[Users]
+   SET [FirstName] = @FirstName
+      ,[MiddleName] = @MiddleName
+	  ,[LastName] = @LastName
+      ,[EmailAddress] = @EmailAddress
+      ,[Password] = @Password
+	  ,[IsDeleted] = @IsDeleted
+      ,[IsApproved] = @IsApproved
+	  ,[FK_GenderId] = @FK_GenderId
+      ,[FK_DepartmentId] = @FK_DepartmentId
+
+ WHERE PK_UserId = @PK_UserId
+ SELECT @@ROWCOUNT
+
+
+
+
+
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_UpdateUserPassword]    Script Date: 2017/06/19 13:59:17 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Sp_UpdateUserPassword]
+
+
+ @PK_UserId INT,
+ @Password NVARCHAR(50)
+
+AS
+
+BEGIN
+DECLARE  @status VARCHAR(200)
+  Update Registered_Users
+
+    SET Password= @Password
+	WHERE PK_UserId= @PK_UserId
+	SELECT HASHBYTES('SHA1', @Password)
+
+ 
+  
+
+               BEGIN
+                              DECLARE @pFirstName VARCHAR(50);
+							  DECLARE @pLastName VARCHAR(50);
+                              SELECT @pFirstName= FirstName,@pLastName = LastName
+                              FROM  Registered_Users
+                              WHERE PK_UserId=@PK_UserId
+                              SET @status='Password for User '+@pFirstName+ ' '+ @pLastName + ' was changed '
+
+                              BEGIN
+                                     INSERT INTO [dbo].[RegisteredUsers_Log] (MessageLog,LogDate, FK_UserId)
+                                         VALUES (@status,GETDATE(), @PK_UserId)
+                              END
+               END
+
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_UpdateUserStatus]    Script Date: 2017/06/19 13:59:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[Sp_UpdateUserStatus]
+
+
+ @PK_UserId int,
+ @IsApproved nvarchar(50)
+
+as
+Begin
+declare  @status varchar(200)
+  Update Registered_Users
+
+    set IsApproved= @IsApproved
+	 Where PK_UserId= @PK_UserId
+	
+
+ 
+  
+
+               Begin
+                              declare @pFirstName varchar(50);
+							 
+                              Select @pFirstName= FirstName
+                              from  Registered_Users
+                              where PK_UserId=@PK_UserId
+                              set @status='User '+@pFirstName+ '  '+'was approved'
+
+                              Begin
+                                             insert into [dbo].[RegisteredUsers_Log] (MessageLog,LogDate, FK_UserId)
+                       values(@status,GETDATE(), @PK_UserId)
+                              end
+               End
+
+
+end
+
+
+
+
+
+
+
+
