@@ -2,14 +2,12 @@
 ---CREATING A TABLES OF PHYSICAL ADDRESS-----
 CREATE TABLE Physical_Address
 (
- PK_PhysicalAddressId intIDENTITY  PRIMARY KEY NOT NULL,
+ PK_PhysicalAddressId int IDENTITY  PRIMARY KEY,
  PhysicalAddress VARCHAR(100),
  StreetLine1 VARCHAR(40),
  streetLine2 VARCHAR(40),
  StreetLine3 VARCHAR(40),
  
-
-
 );
 ---CREATING POSTAL ADDRESS---
 CREATE TABLE Postal_Address

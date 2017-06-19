@@ -1,0 +1,39 @@
+USE [Users]
+GO
+
+CREATE PROC [dbo].[Sp_InsertUser]
+       @FirstName varchar(100)
+      ,@MiddleName varchar(100)
+	  ,@LastName varchar(100)
+      ,@EmailAddress  nvarchar(50)
+      ,@Password   nvarchar (50)
+      ,@IsApproved bit
+	  ,@IsDeleted bit
+	  ,@FK_GenderId int
+      ,@FK_DepartmentId int
+AS
+
+INSERT INTO [dbo].[Registered_Users]
+           ([FirstName]
+           ,[MiddleName]
+           ,[LastName]
+           ,[EmailAddress]
+           ,[Password]
+           ,[IsApproved]
+           ,[IsDeleted]
+           ,[FK_DepartmentId]
+           ,[FK_GenderId])
+     VALUES
+           (@FirstName
+           ,@MiddleName
+           ,@LastName
+           ,@EmailAddress
+           ,@Password
+           ,@IsApproved
+           ,@IsDeleted
+		   ,@FK_GenderId
+           ,@FK_DepartmentId)
+           
+
+
+

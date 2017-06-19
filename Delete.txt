@@ -1,0 +1,13 @@
+USE [Users]
+
+GO
+CREATE PROC Sp_DeleteUser
+
+@PK_UserId INT
+
+AS
+DELETE FROM [dbo].[Registered_Users]
+
+      WHERE PK_UserId = @PK_UserId
+
+	  SELECT @@ROWCOUNT

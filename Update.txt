@@ -1,0 +1,31 @@
+Latest Stored Procedures
+
+USE [Users]
+GO
+
+CREATE PROC [dbo].[Sp_UpdateUser]
+       @PK_UserId int
+      ,@FirstName varchar(100)
+      ,@MiddleName varchar(100)
+	  ,@LastName varchar(100)
+      ,@EmailAddress  nvarchar(50)
+      ,@Password   nvarchar (50)
+      ,@IsApproved bit
+	  ,@IsDeleted bit
+	  ,@FK_GenderId int
+      ,@FK_DepartmentId int
+AS
+ 
+UPDATE [dbo].[Registered_Users]
+   SET [FirstName] = @FirstName
+      ,[MiddleName] = @MiddleName
+	  ,[LastName] = @LastName
+      ,[EmailAddress] = @EmailAddress
+      ,[Password] = @Password
+	  ,[IsDeleted] = @IsDeleted
+      ,[IsApproved] = @IsApproved
+	  ,[FK_GenderId] = @FK_GenderId
+      ,[FK_DepartmentId] = @FK_DepartmentId
+
+ WHERE PK_UserId = @PK_UserId
+ SELECT @@ROWCOUNT

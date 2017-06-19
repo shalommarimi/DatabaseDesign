@@ -1,0 +1,36 @@
+USE [Users]
+GO
+
+create PROCEDURE [dbo].[Sp_UpdateUserPassword]
+
+
+ @PK_UserId int,
+ @Password nvarchar(50)
+
+as
+Begin
+declare  @status varchar(200)
+  Update Registered_Users
+
+    set Password= @Password
+	 Where PK_UserId= @PK_UserId
+	SELECT HASHBYTES('SHA1', @Password)
+
+ 
+  
+
+               Begin
+                              declare @pName varchar(50);
+                              Select @pName= Name
+                              from  Registered_Users
+                              where PK_UserId=@PK_UserId
+                              set @status='Password for User '+@pName+' was changed  '
+
+                              Begin
+                                             insert into [dbo].[ RegisteredUsers_Log] (MessageLog,LogDate, @PK_UserId)
+                       values(@status,GETDATE())
+                              end
+               End
+
+
+end

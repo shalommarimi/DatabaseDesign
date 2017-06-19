@@ -1,0 +1,15 @@
+USE [Users]
+GO
+
+CREATE PROC [dbo].[Sp_SoftDeleteUser]
+       @PK_UserId int
+      ,@IsDeleted bit
+	 
+AS
+ 
+UPDATE [dbo].[Registered_Users]
+   SET 
+	  [IsDeleted] = @IsDeleted
+    
+ WHERE PK_UserId = @PK_UserId
+ SELECT @@ROWCOUNT

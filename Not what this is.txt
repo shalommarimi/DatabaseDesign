@@ -1,0 +1,52 @@
+USE [Users]
+GO
+
+
+ALTER PROC [dbo].[Sp_InsertUser]
+       @FirstName varchar(100)
+      ,@MiddleName varchar(100)
+	  ,@LastName varchar(100)
+      ,@EmailAddress  nvarchar(50)
+      ,@Password   nvarchar (50)
+      ,@IsApproved bit
+	  ,@IsDeleted bit
+	  ,@FK_GenderId int
+      ,@FK_DepartmentId int
+AS
+
+INSERT INTO [dbo].[Registered_Users]
+           ([FirstName]
+           ,[MiddleName]
+           ,[LastName]
+           ,[EmailAddress]
+           ,[Password]
+           ,[IsApproved]
+           ,[IsDeleted]
+           ,[FK_DepartmentId]
+           ,[FK_GenderId])
+     VALUES
+           (@FirstName
+           ,@MiddleName
+           ,@LastName
+           ,@EmailAddress
+           ,@Password
+           ,@IsApproved
+           ,@IsDeleted
+		   ,@FK_GenderId
+           ,@FK_DepartmentId)
+
+
+           BEGIN
+		     declare @status varchar(50);
+			 declare @PK_UserId int;
+                              Select @FirstName= FirstName,@PK_UserId=PK_UserId
+                              from [dbo].[Registered_Users]
+                              where PK_UserId=@PK_UserId
+                              set @status='User '+@FirstName+' was created '
+
+                         
+                       insert into [dbo].[[dbo].[RegisteredUsers_Log] (Message,LogDate,FK_UserId)
+                       values(@status,GETDATE(),@PK_UserId)
+                             
+
+		END
