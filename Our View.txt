@@ -1,0 +1,15 @@
+CREATE VIEW Users_View
+
+AS
+
+SELECT FirstName AS First_Name, LastName AS Last_Name,GenderValue AS Gender, IsApproved AS Approval_Status, DepartmentName AS Department_Name
+FROM Registered_Users 
+
+join  Department 
+
+ON Registered_Users.FK_DepartmentId = Department.PK_DepartmentId 
+join Gender
+
+ON Registered_Users.FK_GenderId = Gender.PK_GenderId
+
+WHERE IsApproved = 0;
