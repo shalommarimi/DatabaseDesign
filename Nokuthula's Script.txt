@@ -25,7 +25,7 @@ AddressLine3 VARCHAR(50),
 
 CREATE TABLE Province
 (
-PK_ProvinceId int PRIMARY KEY NOT NULL,
+PK_ProvinceId int PRIMARY KEY NOT NULL IDENTITY,
 ProvinceName VARCHAR(40),
 
 )
