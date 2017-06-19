@@ -1,0 +1,153 @@
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_UpdateUser]    Script Date: 2017/06/19 14:43:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC [dbo].[Sp_UpdatePhysical_Address]
+      
+      @PK_PhysicalAddressId int
+      ,@PhysicalAddress Varchar(100)
+	  ,@StreetLine1 varchar(40)
+      ,@StreetLine2 varchar(40)
+      ,@StreetLine3  varchar (40)
+      
+	  ,@FK_PostalCodeId int
+      ,@FK_SuburbId int
+	   ,@FK_UserId int
+AS
+ 
+UPDATE [dbo].[Physical_Address]
+   SET [PhysicalAddress] = @PhysicalAddress 
+	  ,[StreetLine1] = @StreetLine1 
+      ,[StreetLine2] = @StreetLine2 
+      ,[StreetLine3] = @StreetLine3
+	  ,[FK_PostalCodeId] = @FK_PostalCodeId
+      ,[FK_SuburbId] = @FK_SuburbId
+	  ,[FK_UserId]=@FK_UserId 
+	   WHERE PK_PhysicalAddressId = @PK_PhysicalAddressId 
+ SELECT *
+ FROM Physical_Address
+
+======INSERT
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_InsertUser]    Script Date: 2017/06/19 15:30:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROC [dbo].[Sp_insertPhysical_Address]
+      
+      @PK_PhysicalAddressId int
+      ,@PhysicalAddress Varchar(50)
+	  ,@StreetLine1 varchar(50)
+      ,@StreetLine2 varchar(50)
+      ,@StreetLine3  varchar (50)
+      
+	  ,@FK_PostalCodeId int
+      ,@FK_SuburbId int
+	   ,@FK_UserId int
+AS
+
+INSERT INTO [dbo].[Physical_Address]
+      ( [PhysicalAddress]
+	  ,[StreetLine1] 
+      ,[streetLine2] 
+      ,[StreetLine3] 
+	  ,[FK_PostalCodeId]  
+      ,[FK_SuburbId] 
+	  ,[FK_UserId])
+	  
+     VALUES
+           (@PhysicalAddress
+           , @StreetLine1 
+           ,@StreetLine2
+           ,@StreetLine3
+           ,@FK_PostalCodeId
+           ,@FK_SuburbId
+           ,@FK_UserId)
+
+
+
+
+
+POSTAL ADDRESS
+===========================
+
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_UpdateUser]    Script Date: 2017/06/19 15:10:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC [dbo].[Sp_UpdatePostal_Address]
+       @PK_PostalAddressId int
+      ,@PostalAddress varchar(50)
+      ,@AddressLine1 varchar(50)
+	  ,@AddressLine2 varchar(50)
+      ,@AddressLine3 nvarchar(50)
+	  ,@FK_PostalCodeId int
+      ,@FK_UserId int
+AS
+ 
+UPDATE[dbo].[Postal_Address]
+   SET[PostalAddress] = @PostalAddress 
+      ,[AddressLine1] = @AddressLine1 
+	  ,[AddressLine2] = @AddressLine2
+      ,[AddressLine3] = @AddressLine3 
+      ,[FK_PostalCodeId]=@FK_PostalCodeId
+	  ,[FK_UserId]=  @FK_UserId 
+
+ WHERE PK_PostalAddressId = @PK_PostalAddressId 
+ SELECT *
+ FROM [dbo].[Postal_Address]
+
+========INSERT
+USE [Users]
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_InsertUser]    Script Date: 2017/06/19 15:30:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROC [dbo].[Sp_insertPostal_Address]
+      
+      @PK_PostalAddressId int
+      ,@PostalAddress Varchar(50)
+	  ,@AddressLine1 varchar(50)
+      ,@AddressLine2 varchar(50)
+      ,@AddressLine3  varchar (50)
+      
+	  ,@FK_PostalCodeId int
+      ,@FK_SuburbId int
+	   ,@FK_UserId int
+AS
+
+INSERT INTO [dbo].[Postal_Address]
+      ( [PostalAddress]
+	  ,[AddressLine1] 
+      ,[AddressLine2] 
+      ,[AddressLine3] 
+	  ,[FK_PostalCodeId]  
+      ,[FK_SuburbId] 
+	  ,[FK_UserId])
+	  
+     VALUES
+           (@PostalAddress
+           , @AddressLine1 
+           ,@AddressLine2
+           ,@AddressLine3
+           ,@FK_PostalCodeId
+           ,@FK_SuburbId
+           ,@FK_UserId)
+
+
